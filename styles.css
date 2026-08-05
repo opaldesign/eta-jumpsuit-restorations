@@ -336,6 +336,47 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
   color: var(--gold);
 }
 
+/* ---------- Stats ---------- */
+
+.stats { text-align: center; }
+
+.stats-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin: 0 0 1.8rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem 1rem;
+}
+
+@media (max-width: 560px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.stat-num {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 2.7rem);
+  color: var(--ivory);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  color: var(--ivory-dim);
+}
+
 /* ---------- About ---------- */
 
 .about-grid {
@@ -529,14 +570,6 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
   text-align: center;
 }
 
-.ticket-foot .tk-future {
-  font-family: var(--font-ticket);
-  font-size: 0.76rem;
-  letter-spacing: 0.06em;
-  color: var(--ivory-dim);
-  margin: 0 0 0.6rem;
-}
-
 .ticket-foot .tk-fine {
   font-size: 0.82rem;
   color: var(--ivory-dim);
@@ -550,6 +583,12 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
 }
 
 /* ---------- Gallery carousel ---------- */
+
+.gal-intro {
+  color: var(--ivory-dim);
+  max-width: 68ch;
+  margin: 0 0 1.6rem;
+}
 
 .carousel {
   position: relative;
