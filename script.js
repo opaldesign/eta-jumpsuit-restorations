@@ -1,3 +1,41 @@
+  // Mobile nav: toggle the dropdown menu, close it on link click or outside click.
+  (function () {
+    var toggle = document.getElementById('navToggle');
+    var menu = document.getElementById('navMobile');
+    if (!toggle || !menu) return;
+
+    function closeMenu() {
+      menu.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open menu');
+    }
+
+    function openMenu() {
+      menu.classList.add('is-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close menu');
+    }
+
+    toggle.addEventListener('click', function () {
+      if (menu.classList.contains('is-open')) closeMenu();
+      else openMenu();
+    });
+
+    menu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!menu.classList.contains('is-open')) return;
+      if (menu.contains(e.target) || toggle.contains(e.target)) return;
+      closeMenu();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeMenu();
+    });
+  })();
+
   // In-page nav: scroll to sections via JS instead of letting the browser
   // follow the #hash href directly, since that was triggering a real page
   // navigation (and a "Forbidden" response) instead of an in-page jump.
