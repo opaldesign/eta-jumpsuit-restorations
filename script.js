@@ -1,23 +1,3 @@
-  // Hero ASCII gem: drift through a few rendered perspectives (top,
-  // rotated, tilted 3/4, side profile) with a slow crossfade.
-  (function () {
-    var field = document.getElementById('heroGemField');
-    if (!field) return;
-
-    var frames = Array.from(field.querySelectorAll('.hero-gem'));
-    if (frames.length < 2) return;
-
-    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion) return;
-
-    var idx = 0;
-    setInterval(function () {
-      frames[idx].classList.remove('is-active');
-      idx = (idx + 1) % frames.length;
-      frames[idx].classList.add('is-active');
-    }, 4200);
-  })();
-
   // Mobile nav: toggle the dropdown menu, close it on link click or outside click.
   (function () {
     var toggle = document.getElementById('navToggle');
