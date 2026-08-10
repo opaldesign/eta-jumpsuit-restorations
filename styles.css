@@ -357,13 +357,6 @@ footer.site-footer { position: relative; z-index: 1; }
 }
 .btn-outline:hover { border-color: var(--gold); color: var(--gold-bright); }
 
-/* seam divider */
-.seam {
-  height: 1px;
-  background: repeating-linear-gradient(90deg, var(--line) 0 6px, transparent 6px 12px);
-  margin: 0 0 clamp(3rem, 6vw, 4.5rem);
-}
-
 section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
 
 .section-head {
@@ -559,45 +552,10 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
 
 /* ---------- About ---------- */
 
-.about-grid {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: clamp(2rem, 5vw, 3.5rem);
-  align-items: start;
-}
-
-@media (max-width: 720px) {
-  .about-grid { grid-template-columns: 1fr; }
-}
-
+.about-body { max-width: 74ch; }
 .about-body p { color: var(--ivory-dim); margin: 0 0 1.1rem; }
 .about-body p:last-child { margin-bottom: 0; }
 .about-body strong { color: var(--ivory); font-weight: 600; }
-
-.quote-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-left: 3px solid var(--gold);
-  padding: 1.6rem 1.6rem;
-  border-radius: 2px;
-}
-
-.quote-card p {
-  font-style: normal;
-  font-size: 1.05rem;
-  line-height: 1.6;
-  letter-spacing: 0.01em;
-  color: var(--gold-bright);
-  margin: 0 0 0.9rem;
-}
-
-.quote-card cite {
-  font-style: normal;
-  font-size: 0.78rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ivory-dim);
-}
 
 /* ---------- Services ---------- */
 
