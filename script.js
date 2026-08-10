@@ -230,8 +230,10 @@
     });
   })();
 
-  // Scattered rhinestones: idle twinkle always on; scrolling triggers bright
-  // flares on random stones plus a slow parallax drift of the whole field.
+  // Scattered rhinestones: idle twinkle always on. Scrolling drives a
+  // multi-depth parallax (each stone drifts at its own rate) plus a
+  // reflection band that flares any stone crossing the viewport's
+  // vertical middle, like light catching rhinestones as the page moves.
   (function () {
     var field = document.getElementById('stoneField');
     if (!field) return;
@@ -248,6 +250,11 @@
       '#e0263f', '#2f7fe0', '#26b673', '#e2962a', '#29c8c8', '#a94fe0'
     ];
 
+    // Each stone gets its own parallax depth (how much it drifts per
+    // pixel scrolled) so the field reads as several layers at different
+    // distances, Apple-product-page style, instead of one flat sheet.
+    var depths = [];
+
     for (var i = 0; i < STONE_COUNT; i++) {
       var stone = document.createElement('span');
       stone.className = 'stone';
@@ -259,30 +266,40 @@
       stone.style.setProperty('--c', COLORS[Math.floor(Math.random() * COLORS.length)]);
       field.appendChild(stone);
       stones.push(stone);
+      depths.push(0.35 + Math.random() * 1.15);
     }
 
     if (reduceMotion) return;
 
     var ticking = false;
+
     function updateParallax() {
       var y = window.scrollY || window.pageYOffset;
-      field.style.transform = 'translate3d(0, ' + (y * -0.015).toFixed(2) + 'px, 0)';
-      ticking = false;
-    }
+      var vh = window.innerHeight;
+      var band = vh * 0.5;
 
-    var lastFlare = 0;
-    function flareBurst() {
-      var now = Date.now();
-      if (now - lastFlare < 90) return;
-      lastFlare = now;
-      var batch = 2 + Math.floor(Math.random() * 3);
-      for (var i = 0; i < batch; i++) {
-        var stone = stones[Math.floor(Math.random() * stones.length)];
-        stone.classList.add('flare');
-        (function (s) {
-          setTimeout(function () { s.classList.remove('flare'); }, 420);
-        })(stone);
+      // Pass 1: move every stone at its own depth (read nothing, just write —
+      // transform is compositor-only so this doesn't force layout).
+      for (var i = 0; i < stones.length; i++) {
+        var offset = (y * -0.09 * depths[i]).toFixed(1);
+        stones[i].style.transform = 'translate3d(0, ' + offset + 'px, 0)';
       }
+
+      // Pass 2: a light band sweeps across the vertical middle of the
+      // viewport as you scroll — any stone currently crossing it catches
+      // a bright reflection flare, like light glancing off rhinestones as
+      // the "jumpsuit" (page) moves past.
+      for (var j = 0; j < stones.length; j++) {
+        var rect = stones[j].getBoundingClientRect();
+        var dist = Math.abs(rect.top - band);
+        if (dist < 70) {
+          stones[j].classList.add('flare');
+        } else {
+          stones[j].classList.remove('flare');
+        }
+      }
+
+      ticking = false;
     }
 
     window.addEventListener('scroll', function () {
@@ -290,6 +307,7 @@
         requestAnimationFrame(updateParallax);
         ticking = true;
       }
-      flareBurst();
     }, { passive: true });
+
+    updateParallax();
   })();

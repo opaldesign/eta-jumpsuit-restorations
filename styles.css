@@ -6,11 +6,11 @@
   src: url('fonts/bevan.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'Mulish';
+  font-family: 'Libre Franklin';
   font-style: normal;
-  font-weight: 200 1000;
+  font-weight: 100 900;
   font-display: swap;
-  src: url('fonts/mulish-variable.woff2') format('woff2');
+  src: url('fonts/libre-franklin-variable.woff2') format('woff2');
 }
 :root {
   --bg: #050403;
@@ -35,17 +35,17 @@
 
   --font-display: 'Bevan', Georgia, serif;
   --font-accent: 'Bevan', Georgia, serif;
-  --font-body: 'Mulish', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  --font-ticket: 'Mulish', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Libre Franklin', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-ticket: 'Libre Franklin', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
 }
 
 /* ---------- Bedazzle kit: gilded text, gems, studs, frame ---------- */
 /* Reusable decoration primitives referenced throughout the sheet below. */
 
 .gilded {
-  background: linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 15%, #fff8df 30%, var(--gold-bright) 42%, var(--gold) 60%, var(--gold-deep) 78%, var(--gold) 100%);
-  background-size: 220% 100%;
-  animation: goldShine 6s linear infinite;
+  background: linear-gradient(100deg, var(--gold) 0%, var(--gold) 30%, var(--gold-deep) 40%, #fff8df 50%, var(--gold-bright) 54%, #fff8df 58%, var(--gold-deep) 68%, var(--gold) 78%, var(--gold) 100%);
+  background-size: 280% 100%;
+  animation: goldShine 3.4s linear infinite;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -91,8 +91,8 @@
 }
 
 @keyframes goldShine {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -50% 0; }
+  from { background-position: 0% 0; }
+  to   { background-position: -280% 0; }
 }
 
 .nailhead-row {
@@ -301,9 +301,9 @@ footer.site-footer { position: relative; z-index: 1; }
 
 .brand-word em {
   font-style: normal;
-  background: linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 15%, #fff8df 30%, var(--gold-bright) 42%, var(--gold) 60%, var(--gold-deep) 78%, var(--gold) 100%);
-  background-size: 220% 100%;
-  animation: goldShine 6s linear infinite;
+  background: linear-gradient(100deg, var(--gold) 0%, var(--gold) 30%, var(--gold-deep) 40%, #fff8df 50%, var(--gold-bright) 54%, #fff8df 58%, var(--gold-deep) 68%, var(--gold) 78%, var(--gold) 100%);
+  background-size: 280% 100%;
+  animation: goldShine 4.2s linear infinite;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -392,30 +392,30 @@ footer.site-footer { position: relative; z-index: 1; }
 /* ---------- Hero ---------- */
 
 .hero {
-  padding: clamp(3.5rem, 9vw, 6.5rem) 0 clamp(3rem, 7vw, 5rem);
   position: relative;
 }
 
 .hero-inner {
-  max-width: 720px;
+  width: 100%;
+  text-align: center;
 }
 
 .hero h1 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(2.4rem, 6vw, 3.9rem);
+  font-size: clamp(0.85rem, 3.6vw, 3.9rem);
   line-height: 1.12;
   letter-spacing: 0.005em;
-  margin: 0 0 1.3rem;
-  text-wrap: balance;
+  margin: 0;
+  white-space: nowrap;
   color: var(--ivory);
 }
 
 .hero h1 em {
   font-style: normal;
-  background: linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 15%, #fff8df 30%, var(--gold-bright) 42%, var(--gold) 60%, var(--gold-deep) 78%, var(--gold) 100%);
-  background-size: 220% 100%;
-  animation: goldShine 6s linear infinite;
+  background: linear-gradient(100deg, var(--gold) 0%, var(--gold) 30%, var(--gold-deep) 40%, #fff8df 50%, var(--gold-bright) 54%, #fff8df 58%, var(--gold-deep) 68%, var(--gold) 78%, var(--gold) 100%);
+  background-size: 280% 100%;
+  animation: goldShine 3.7s linear infinite;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -447,9 +447,9 @@ footer.site-footer { position: relative; z-index: 1; }
 .btn:hover { transform: translateY(-1px); }
 
 .btn-solid {
-  background: linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 20%, var(--gold-bright) 35%, #fff8df 48%, var(--gold-bright) 60%, var(--gold) 80%, var(--gold-deep) 100%);
-  background-size: 220% 100%;
-  animation: goldShine 5s linear infinite;
+  background: linear-gradient(100deg, var(--gold) 0%, var(--gold) 30%, var(--gold-deep) 40%, #fff8df 50%, var(--gold-bright) 54%, #fff8df 58%, var(--gold-deep) 68%, var(--gold) 78%, var(--gold) 100%);
+  background-size: 280% 100%;
+  animation: goldShine 2.8s linear infinite;
   color: #241a05;
   box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset, 0 6px 16px -8px rgba(212,175,55,0.7);
 }
@@ -517,9 +517,9 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
   font-size: clamp(1.5rem, 2.8vw, 2.05rem);
   letter-spacing: 0.005em;
   margin: 0;
-  background: linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 15%, #fff8df 30%, var(--gold-bright) 42%, var(--gold) 60%, var(--gold-deep) 78%, var(--gold) 100%);
-  background-size: 220% 100%;
-  animation: goldShine 6s linear infinite;
+  background: linear-gradient(100deg, var(--gold) 0%, var(--gold) 30%, var(--gold-deep) 40%, #fff8df 50%, var(--gold-bright) 54%, #fff8df 58%, var(--gold-deep) 68%, var(--gold) 78%, var(--gold) 100%);
+  background-size: 280% 100%;
+  animation: goldShine 3.9s linear infinite;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -584,9 +584,9 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
 .stat-num {
   font-family: var(--font-display);
   font-size: clamp(2rem, 5vw, 2.7rem);
-  background: linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 15%, #fff8df 30%, var(--gold-bright) 42%, var(--gold) 60%, var(--gold-deep) 78%, var(--gold) 100%);
-  background-size: 220% 100%;
-  animation: goldShine 6s linear infinite;
+  background: linear-gradient(100deg, var(--gold) 0%, var(--gold) 30%, var(--gold-deep) 40%, #fff8df 50%, var(--gold-bright) 54%, #fff8df 58%, var(--gold-deep) 68%, var(--gold) 78%, var(--gold) 100%);
+  background-size: 280% 100%;
+  animation: goldShine 4.6s linear infinite;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -608,12 +608,21 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
    one-line and a five-line quote never reflows the page around it. */
 .testi-viewport {
   display: grid;
-  align-items: start;
+  align-items: stretch;
   justify-items: center;
 }
 
+/* Every testimonial fills the same shared height (set by the tallest
+   quote, via the shared grid cell below) and is a flex column with the
+   name pinned to the bottom via margin-top:auto — so the name always
+   lands on the same line, whether the quote is one word or five
+   sentences. */
 .testi-item {
   grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
   width: 100%;
   max-width: 62ch;
   margin: 0 auto;
@@ -645,11 +654,22 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
 
 .testi-item cite {
   display: block;
+  margin-top: auto;
+  padding-top: 1.1rem;
   font-style: normal;
   font-size: 0.78rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--gold);
+}
+
+.testi-item cite::before {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 1px;
+  margin: 0 auto 0.7rem;
+  background: var(--gold);
 }
 
 .testi-badge {
@@ -767,9 +787,9 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
   font-size: 1.05rem;
   letter-spacing: 0.01em;
   margin: 0 0 0.55rem;
-  background: linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 20%, var(--gold-bright) 40%, #fff8df 55%, var(--gold-bright) 68%, var(--gold) 85%, var(--gold-deep) 100%);
-  background-size: 220% 100%;
-  animation: goldShine 7s linear infinite;
+  background: linear-gradient(100deg, var(--gold) 0%, var(--gold) 30%, var(--gold-deep) 40%, #fff8df 50%, var(--gold-bright) 54%, #fff8df 58%, var(--gold-deep) 68%, var(--gold) 78%, var(--gold) 100%);
+  background-size: 280% 100%;
+  animation: goldShine 5.1s linear infinite;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -825,9 +845,9 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
   font-size: 0.95rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  background: linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 15%, #fff8df 30%, var(--gold-bright) 42%, var(--gold) 60%, var(--gold-deep) 78%, var(--gold) 100%);
-  background-size: 220% 100%;
-  animation: goldShine 6s linear infinite;
+  background: linear-gradient(100deg, var(--gold) 0%, var(--gold) 30%, var(--gold-deep) 40%, #fff8df 50%, var(--gold-bright) 54%, #fff8df 58%, var(--gold-deep) 68%, var(--gold) 78%, var(--gold) 100%);
+  background-size: 280% 100%;
+  animation: goldShine 3.6s linear infinite;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -867,9 +887,9 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
   font-family: var(--font-ticket);
   font-weight: 800;
   font-size: 0.98rem;
-  background: linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 20%, var(--gold-bright) 40%, #fff8df 55%, var(--gold-bright) 68%, var(--gold) 85%, var(--gold-deep) 100%);
-  background-size: 220% 100%;
-  animation: goldShine 7s linear infinite;
+  background: linear-gradient(100deg, var(--gold) 0%, var(--gold) 30%, var(--gold-deep) 40%, #fff8df 50%, var(--gold-bright) 54%, #fff8df 58%, var(--gold-deep) 68%, var(--gold) 78%, var(--gold) 100%);
+  background-size: 280% 100%;
+  animation: goldShine 5.4s linear infinite;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -1049,9 +1069,9 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
   font-style: normal;
   font-size: clamp(1.4rem, 3vw, 1.9rem);
   letter-spacing: 0.005em;
-  background: linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 15%, #fff8df 30%, var(--gold-bright) 42%, var(--gold) 60%, var(--gold-deep) 78%, var(--gold) 100%);
-  background-size: 220% 100%;
-  animation: goldShine 6s linear infinite;
+  background: linear-gradient(100deg, var(--gold) 0%, var(--gold) 30%, var(--gold-deep) 40%, #fff8df 50%, var(--gold-bright) 54%, #fff8df 58%, var(--gold-deep) 68%, var(--gold) 78%, var(--gold) 100%);
+  background-size: 280% 100%;
+  animation: goldShine 3.5s linear infinite;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
