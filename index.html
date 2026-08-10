@@ -29,11 +29,26 @@
 <div class="bg-blur" aria-hidden="true"></div>
 <div class="stone-field" id="stoneField" aria-hidden="true"></div>
 
+<div class="page-frame" aria-hidden="true">
+  <span class="frame-gems tl"><span class="gem gem-lg gem-ruby"></span><span class="gem gem-sapphire"></span><span class="gem gem-emerald"></span></span>
+  <span class="frame-gems tr"><span class="gem gem-emerald"></span><span class="gem gem-sapphire"></span><span class="gem gem-lg gem-ruby"></span></span>
+  <span class="frame-gems bl"><span class="gem gem-amber"></span><span class="gem gem-amethyst"></span><span class="gem gem-lg gem-aqua"></span></span>
+  <span class="frame-gems br"><span class="gem gem-lg gem-aqua"></span><span class="gem gem-amethyst"></span><span class="gem gem-amber"></span></span>
+</div>
+
 <nav class="nav">
   <div class="nav-inner">
     <a class="brand" href="#top">
       <svg class="brand-mark" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M13.2 1.5 4.8 13.4h5.1l-1.7 9.1 9.6-13.1h-5.4l1.8-7.9z" fill="#ffffff"/>
+        <defs>
+          <linearGradient id="brandBoltGold" x1="4.8" y1="1.5" x2="18.6" y2="22.5" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#fff8df"/>
+            <stop offset="0.35" stop-color="#f7dc82"/>
+            <stop offset="0.65" stop-color="#d4af37"/>
+            <stop offset="1" stop-color="#8a6a1f"/>
+          </linearGradient>
+        </defs>
+        <path d="M13.2 1.5 4.8 13.4h5.1l-1.7 9.1 9.6-13.1h-5.4l1.8-7.9z" fill="url(#brandBoltGold)"/>
       </svg>
       <span class="brand-word">ETA <em>Jumpsuit Restorations</em></span>
     </a>
@@ -245,6 +260,10 @@
         <span class="section-num">Flat Rates</span>
       </div>
       <div class="ticket">
+        <span class="ticket-corner tl"><span class="gem gem-lg gem-ruby"></span></span>
+        <span class="ticket-corner tr"><span class="gem gem-lg gem-sapphire"></span></span>
+        <span class="ticket-corner bl"><span class="gem gem-lg gem-emerald"></span></span>
+        <span class="ticket-corner br"><span class="gem gem-lg gem-amber"></span></span>
         <div class="ticket-head">
           <p class="tk-title">ETA Jumpsuit Restorations</p>
           <p class="tk-sub">— WORK ORDER · FLAT RATE PRICING —</p>
@@ -415,6 +434,8 @@
     </section>
 
   </div>
+
+  <div class="stud-row" aria-hidden="true"></div>
 
   <div class="cta">
     <div class="wrap">

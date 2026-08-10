@@ -5,22 +5,104 @@
   font-display: swap;
   src: url('fonts/germania-one.woff2') format('woff2');
 }
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 200 1000;
+  font-display: swap;
+  src: url('fonts/mulish-variable.woff2') format('woff2');
+}
 :root {
-  --bg: #000000;
-  --bg-2: #000000;
-  --surface: rgba(255,255,255,0.045);
-  --surface-2: rgba(255,255,255,0.08);
-  --line: rgba(255,255,255,0.18);
-  --gold: #ffffff;
-  --gold-bright: #ffffff;
+  --bg: #050403;
+  --bg-2: #0a0704;
+  --surface: rgba(212,175,55,0.055);
+  --surface-2: rgba(212,175,55,0.1);
+  --line: rgba(212,175,55,0.28);
+  --gold: #d4af37;
+  --gold-bright: #f7dc82;
+  --gold-deep: #8a6a1f;
   --ivory: #ffffff;
-  --ivory-dim: rgba(255,255,255,0.6);
+  --ivory-dim: rgba(255,255,255,0.62);
   --shadow: rgba(0,0,0,0.6);
+
+  /* rhinestone palette — sprinkled across the bg sparkle, ticket corners, dividers */
+  --c-ruby: #e0263f;       --c-ruby-dark: #7a0f1e;
+  --c-sapphire: #2f7fe0;   --c-sapphire-dark: #0c2f66;
+  --c-emerald: #26b673;    --c-emerald-dark: #0d5c37;
+  --c-amber: #e2962a;      --c-amber-dark: #7a4e10;
+  --c-aqua: #29c8c8;       --c-aqua-dark: #0d5c5c;
+  --c-amethyst: #a94fe0;   --c-amethyst-dark: #4a1a66;
 
   --font-display: 'Germania One', Georgia, serif;
   --font-accent: 'Germania One', Georgia, serif;
-  --font-body: 'Germania One', Georgia, serif;
-  --font-ticket: 'Germania One', Georgia, serif;
+  --font-body: 'Mulish', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-ticket: 'Mulish', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+}
+
+/* ---------- Bedazzle kit: gilded text, gems, studs, frame ---------- */
+/* Reusable decoration primitives referenced throughout the sheet below. */
+
+.gilded {
+  background: linear-gradient(180deg, #fff8df 0%, var(--gold-bright) 32%, var(--gold) 62%, var(--gold-deep) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.3)) drop-shadow(0 2px 3px rgba(0,0,0,0.55));
+}
+
+.gem {
+  --gc: var(--gold-bright);
+  --gd: var(--gold-deep);
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background:
+    radial-gradient(circle at 32% 26%, #fff 0%, rgba(255,255,255,0.95) 9%, transparent 30%),
+    radial-gradient(circle at 68% 72%, rgba(255,255,255,0.25) 0%, transparent 40%),
+    radial-gradient(circle at 48% 52%, var(--gc) 0%, var(--gd) 100%);
+  box-shadow: 0 0 6px 0 color-mix(in srgb, var(--gc) 65%, transparent), inset 0 0 1.5px rgba(255,255,255,0.7);
+  animation: gemGlint 3.4s ease-in-out infinite;
+}
+
+.gem.gem-ruby      { --gc: var(--c-ruby);      --gd: var(--c-ruby-dark); }
+.gem.gem-sapphire   { --gc: var(--c-sapphire);  --gd: var(--c-sapphire-dark); }
+.gem.gem-emerald    { --gc: var(--c-emerald);   --gd: var(--c-emerald-dark); }
+.gem.gem-amber      { --gc: var(--c-amber);     --gd: var(--c-amber-dark); }
+.gem.gem-aqua        { --gc: var(--c-aqua);      --gd: var(--c-aqua-dark); }
+.gem.gem-amethyst   { --gc: var(--c-amethyst);  --gd: var(--c-amethyst-dark); }
+.gem.gem-gold       { --gc: var(--gold-bright); --gd: var(--gold-deep); }
+
+.gem.gem-lg { width: 15px; height: 15px; }
+
+@keyframes gemGlint {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.35); }
+}
+
+.stud {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: radial-gradient(circle at 34% 28%, #fff8d8 0%, var(--gold-bright) 30%, var(--gold) 62%, var(--gold-deep) 100%);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.6), inset 0 0 1px rgba(255,255,255,0.8);
+}
+
+.stud-row {
+  height: 9px;
+  margin: 0 0 clamp(2rem, 4vw, 3rem);
+  background-image: radial-gradient(circle at center, var(--gold-bright) 0 2px, var(--gold) 2px 3px, transparent 3px 100%);
+  background-size: 24px 9px;
+  background-repeat: repeat-x;
+  background-position: center;
+  opacity: 0.85;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gem { animation: none; }
 }
 
 * { box-sizing: border-box; }
@@ -39,7 +121,7 @@ section, .hero { scroll-margin-top: 84px; }
 body {
   margin: 0;
   background:
-    radial-gradient(ellipse 900px 500px at 50% -10%, rgba(255,255,255,0.06), transparent 60%),
+    radial-gradient(ellipse 900px 500px at 50% -10%, rgba(212,175,55,0.1), transparent 60%),
     linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
   color: var(--ivory);
   font-family: var(--font-body);
@@ -67,11 +149,11 @@ img, svg { max-width: 100%; display: block; }
   filter: blur(70px);
   opacity: 0.55;
   background:
-    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.12), transparent 40%),
-    radial-gradient(circle at 82% 12%, rgba(255,255,255,0.09), transparent 35%),
-    radial-gradient(circle at 60% 68%, rgba(255,255,255,0.10), transparent 45%),
-    radial-gradient(circle at 22% 85%, rgba(255,255,255,0.08), transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(255,255,255,0.07), transparent 38%);
+    radial-gradient(circle at 15% 20%, rgba(212,175,55,0.22), transparent 40%),
+    radial-gradient(circle at 82% 12%, rgba(224,38,63,0.14), transparent 35%),
+    radial-gradient(circle at 60% 68%, rgba(212,175,55,0.16), transparent 45%),
+    radial-gradient(circle at 22% 85%, rgba(47,127,224,0.12), transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(212,175,55,0.14), transparent 38%);
   animation: bgDrift 46s ease-in-out infinite alternate;
 }
 
@@ -88,6 +170,36 @@ img, svg { max-width: 100%; display: block; }
   overflow: hidden;
 }
 
+/* Bedazzled picture-frame border around the whole page, gem clusters at
+   the corners — echoes the ornate gold poster/jumpsuit trim. */
+.page-frame {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  border: 5px solid transparent;
+  border-image: linear-gradient(135deg, #fff3c4, var(--gold) 25%, var(--gold-deep) 50%, var(--gold) 75%, #fff3c4) 1;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.5), inset 0 0 50px rgba(212,175,55,0.12);
+}
+
+.frame-gems {
+  position: absolute;
+  display: flex;
+  gap: 6px;
+  padding: 9px;
+}
+
+.frame-gems.tl { top: 0; left: 0; }
+.frame-gems.tr { top: 0; right: 0; }
+.frame-gems.bl { bottom: 0; left: 0; }
+.frame-gems.br { bottom: 0; right: 0; }
+
+@media (max-width: 640px) {
+  .page-frame { border-width: 3px; }
+  .frame-gems .gem.gem-lg { width: 10px; height: 10px; }
+  .frame-gems .gem:not(.gem-lg) { width: 6px; height: 6px; }
+}
+
 .stone {
   position: absolute;
   left: var(--x, 50%);
@@ -101,8 +213,10 @@ img, svg { max-width: 100%; display: block; }
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 28%, #fff 0%, rgba(255,255,255,0.85) 18%, rgba(255,255,255,0.12) 45%, transparent 72%);
-  opacity: 0.16;
+  background:
+    radial-gradient(circle at 30% 28%, #fff 0%, rgba(255,255,255,0.9) 14%, transparent 32%),
+    radial-gradient(circle at 50% 50%, var(--c, #fff) 0%, transparent 70%);
+  opacity: 0.22;
   animation: twinkle var(--dur, 3.5s) ease-in-out infinite;
   animation-delay: var(--delay, 0s);
 }
@@ -112,7 +226,7 @@ img, svg { max-width: 100%; display: block; }
   position: absolute;
   inset: -70%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.3) 42%, transparent 72%);
+  background: radial-gradient(circle, #fff 0%, var(--c, #fff) 35%, transparent 72%);
   opacity: 0;
   transform: scale(0.6);
   transition: opacity 0.25s ease, transform 0.4s ease;
@@ -150,7 +264,8 @@ footer.site-footer { position: relative; z-index: 1; }
   z-index: 20;
   background: rgba(0, 0, 0, 0.86);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, transparent, var(--gold) 15%, var(--gold-bright) 50%, var(--gold) 85%, transparent) 1;
 }
 
 .nav-inner {
@@ -181,7 +296,10 @@ footer.site-footer { position: relative; z-index: 1; }
 
 .brand-word em {
   font-style: normal;
-  color: var(--gold-bright);
+  background: linear-gradient(180deg, #fff8df 0%, var(--gold-bright) 35%, var(--gold) 70%, var(--gold-deep) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .nav-links {
@@ -294,6 +412,18 @@ footer.site-footer { position: relative; z-index: 1; }
   background: var(--gold);
 }
 
+.eyebrow::after {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 26%, #fff 0%, rgba(255,255,255,0.95) 10%, transparent 30%),
+    radial-gradient(circle at 48% 52%, var(--gold-bright) 0%, var(--gold-deep) 100%);
+  box-shadow: 0 0 6px rgba(212,175,55,0.75);
+}
+
 .hero h1 {
   font-family: var(--font-display);
   font-weight: 400;
@@ -307,8 +437,13 @@ footer.site-footer { position: relative; z-index: 1; }
 
 .hero h1 em {
   font-style: normal;
-  color: var(--gold-bright);
+  background: linear-gradient(180deg, #fff8df 0%, var(--gold-bright) 32%, var(--gold) 62%, var(--gold-deep) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.3)) drop-shadow(0 2px 3px rgba(0,0,0,0.55));
   text-decoration: underline;
+  text-decoration-color: var(--gold);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.12em;
 }
@@ -327,6 +462,7 @@ footer.site-footer { position: relative; z-index: 1; }
 }
 
 .btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -339,16 +475,39 @@ footer.site-footer { position: relative; z-index: 1; }
   text-decoration: none;
   border: 1px solid transparent;
   cursor: pointer;
+  overflow: hidden;
   transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
 }
 
 .btn:hover { transform: translateY(-1px); }
 
 .btn-solid {
-  background: #ffffff;
-  color: #000000;
+  background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 55%, var(--gold-deep) 100%);
+  color: #241a05;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset, 0 6px 16px -8px rgba(212,175,55,0.7);
 }
-.btn-solid:hover { background: rgba(255,255,255,0.85); }
+.btn-solid:hover { background: linear-gradient(180deg, #fff2c2 0%, var(--gold-bright) 55%, var(--gold) 100%); }
+
+.btn-solid::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(115deg, transparent, rgba(255,255,255,0.75), transparent);
+  transform: skewX(-20deg);
+  animation: btnShine 4s ease-in-out infinite;
+}
+
+@keyframes btnShine {
+  0%, 55% { left: -150%; }
+  100% { left: 150%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-solid::after { animation: none; display: none; }
+}
 
 .btn-outline {
   border-color: var(--line);
@@ -374,7 +533,11 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
   font-size: clamp(1.5rem, 2.8vw, 2.05rem);
   letter-spacing: 0.005em;
   margin: 0;
-  color: var(--ivory);
+  background: linear-gradient(180deg, #fff8df 0%, var(--gold-bright) 32%, var(--gold) 62%, var(--gold-deep) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.3)) drop-shadow(0 2px 3px rgba(0,0,0,0.55));
 }
 
 .section-num {
@@ -383,6 +546,20 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--gold);
+}
+
+.section-num::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin-right: 0.5em;
+  vertical-align: middle;
+  background:
+    radial-gradient(circle at 32% 26%, #fff 0%, rgba(255,255,255,0.95) 10%, transparent 30%),
+    radial-gradient(circle at 48% 52%, var(--gold-bright) 0%, var(--gold-deep) 100%);
+  box-shadow: 0 0 5px rgba(212,175,55,0.75);
 }
 
 /* ---------- Stats ---------- */
@@ -421,7 +598,11 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
 .stat-num {
   font-family: var(--font-display);
   font-size: clamp(2rem, 5vw, 2.7rem);
-  color: var(--ivory);
+  background: linear-gradient(180deg, #fff8df 0%, var(--gold-bright) 32%, var(--gold) 62%, var(--gold-deep) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.3)) drop-shadow(0 2px 3px rgba(0,0,0,0.55));
 }
 
 .stat-label {
@@ -598,7 +779,10 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
   font-size: 1.05rem;
   letter-spacing: 0.01em;
   margin: 0 0 0.55rem;
-  color: var(--gold-bright);
+  background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 70%, var(--gold-deep) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .svc-card p {
@@ -612,11 +796,23 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
 
 .ticket {
   background: var(--surface);
-  border: 1px solid var(--line);
+  border: 2px solid var(--gold);
   border-radius: 3px;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(212,175,55,0.3), 0 24px 50px -28px rgba(212,175,55,0.5);
 }
+
+.ticket-corner {
+  position: absolute;
+  z-index: 2;
+  padding: 10px;
+}
+
+.ticket-corner.tl { top: 0; left: 0; }
+.ticket-corner.tr { top: 0; right: 0; }
+.ticket-corner.bl { bottom: 0; left: 0; }
+.ticket-corner.br { bottom: 0; right: 0; }
 
 .ticket::before {
   content: "";
@@ -635,11 +831,15 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
 }
 
 .ticket-head .tk-title {
-  font-family: var(--font-ticket);
+  font-family: var(--font-display);
   font-size: 0.95rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--gold-bright);
+  background: linear-gradient(180deg, #fff8df 0%, var(--gold-bright) 32%, var(--gold) 62%, var(--gold-deep) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.3)) drop-shadow(0 1px 2px rgba(0,0,0,0.55));
   margin: 0 0 0.3rem;
 }
 
@@ -673,8 +873,12 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
 
 .tk-price {
   font-family: var(--font-ticket);
+  font-weight: 800;
   font-size: 0.98rem;
-  color: var(--gold-bright);
+  background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 65%, var(--gold-deep) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
   text-align: right;
@@ -848,14 +1052,19 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
 .cta {
   text-align: center;
   padding: clamp(3rem, 7vw, 4.5rem) 0;
-  border-top: 1px solid var(--line);
 }
 
 .cta h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
   font-style: normal;
   font-size: clamp(1.4rem, 3vw, 1.9rem);
   letter-spacing: 0.005em;
-  color: var(--gold-bright);
+  background: linear-gradient(180deg, #fff8df 0%, var(--gold-bright) 32%, var(--gold) 62%, var(--gold-deep) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.3)) drop-shadow(0 2px 3px rgba(0,0,0,0.55));
   margin: 0 0 1.6rem;
   text-wrap: balance;
 }

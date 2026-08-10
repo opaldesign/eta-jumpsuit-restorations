@@ -240,6 +240,14 @@
     var STONE_COUNT = 55;
     var stones = [];
 
+    // Mostly gold/white rhinestones, with a scattered handful of colored
+    // gems (ruby, sapphire, emerald, amber, aqua, amethyst) mixed in.
+    var COLORS = [
+      '#ffffff', '#ffffff', '#ffffff',
+      '#f7dc82', '#f7dc82', '#f7dc82',
+      '#e0263f', '#2f7fe0', '#26b673', '#e2962a', '#29c8c8', '#a94fe0'
+    ];
+
     for (var i = 0; i < STONE_COUNT; i++) {
       var stone = document.createElement('span');
       stone.className = 'stone';
@@ -248,6 +256,7 @@
       stone.style.setProperty('--s', (Math.random() * 4 + 3).toFixed(1) + 'px');
       stone.style.setProperty('--dur', (Math.random() * 2.5 + 2.5).toFixed(2) + 's');
       stone.style.setProperty('--delay', (Math.random() * 4).toFixed(2) + 's');
+      stone.style.setProperty('--c', COLORS[Math.floor(Math.random() * COLORS.length)]);
       field.appendChild(stone);
       stones.push(stone);
     }
