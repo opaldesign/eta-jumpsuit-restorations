@@ -25,15 +25,90 @@
 </head>
 <body>
 
+<svg class="bling-sprites" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="goldDome" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#fff8df"/>
+      <stop offset="35%" stop-color="#f7dc82"/>
+      <stop offset="70%" stop-color="#d4af37"/>
+      <stop offset="100%" stop-color="#6b5218"/>
+    </radialGradient>
+  </defs>
+
+  <!-- 8-facet cut rhinestone: octagon table + 8 alternating-shade crown
+       facets + specular hotspot + dark prong rim. Colored via CSS `color`
+       on the <use> (facets use fill="currentColor"). -->
+  <symbol id="gem8cut" viewBox="0 0 32 32">
+    <circle cx="16" cy="16" r="15" fill="none" stroke="rgba(0,0,0,0.4)" stroke-width="1"/>
+    <polygon points="30,16 25.9,25.9 20.24,20.24 22,16" fill="currentColor" fill-opacity="0.9"/>
+    <polygon points="25.9,25.9 16,30 16,22 20.24,20.24" fill="currentColor" fill-opacity="0.5"/>
+    <polygon points="16,30 6.1,25.9 11.76,20.24 16,22" fill="currentColor" fill-opacity="0.85"/>
+    <polygon points="6.1,25.9 2,16 10,16 11.76,20.24" fill="currentColor" fill-opacity="0.45"/>
+    <polygon points="2,16 6.1,6.1 11.76,11.76 10,16" fill="currentColor" fill-opacity="0.8"/>
+    <polygon points="6.1,6.1 16,2 16,10 11.76,11.76" fill="currentColor" fill-opacity="0.4"/>
+    <polygon points="16,2 25.9,6.1 20.24,11.76 16,10" fill="currentColor" fill-opacity="0.75"/>
+    <polygon points="25.9,6.1 30,16 22,16 20.24,11.76" fill="currentColor" fill-opacity="0.35"/>
+    <polygon points="22,16 20.24,20.24 16,22 11.76,20.24 10,16 11.76,11.76 16,10 20.24,11.76" fill="currentColor"/>
+    <ellipse cx="13.2" cy="12.4" rx="3.1" ry="1.9" fill="#fff" fill-opacity="0.8" transform="rotate(-35 13.2 12.4)"/>
+    <circle cx="12.5" cy="11.4" r="0.9" fill="#fff" fill-opacity="0.95"/>
+  </symbol>
+
+  <!-- Nailheads: flat metal trim, domed-bevel shading (star/oval/diamond/
+       square) or 4-facet flat-shaded pyramid. Always gold via goldDome. -->
+  <symbol id="nailhead-star" viewBox="0 0 32 32">
+    <polygon points="16,2 19.23,11.55 29.31,11.67 21.23,17.70 24.23,27.33 16,21.5 7.77,27.33 10.77,17.70 2.69,11.67 12.77,11.55" fill="url(#goldDome)" stroke="#3d2e0d" stroke-width="0.6" stroke-linejoin="round"/>
+    <ellipse cx="13.5" cy="10.5" rx="2.4" ry="1.3" fill="#fff" fill-opacity="0.7" transform="rotate(-20 13.5 10.5)"/>
+  </symbol>
+
+  <symbol id="nailhead-oval" viewBox="0 0 32 32">
+    <ellipse cx="16" cy="16" rx="13" ry="9" fill="url(#goldDome)" stroke="#3d2e0d" stroke-width="0.6"/>
+    <ellipse cx="12" cy="12" rx="3.4" ry="1.7" fill="#fff" fill-opacity="0.75" transform="rotate(-18 12 12)"/>
+  </symbol>
+
+  <symbol id="nailhead-diamond" viewBox="0 0 32 32">
+    <polygon points="16,2 28,16 16,30 4,16" fill="url(#goldDome)" stroke="#3d2e0d" stroke-width="0.6" stroke-linejoin="round"/>
+    <ellipse cx="13" cy="11.5" rx="2.6" ry="1.4" fill="#fff" fill-opacity="0.75" transform="rotate(-30 13 11.5)"/>
+  </symbol>
+
+  <symbol id="nailhead-square" viewBox="0 0 32 32">
+    <rect x="5" y="5" width="22" height="22" rx="2.5" fill="url(#goldDome)" stroke="#3d2e0d" stroke-width="0.6"/>
+    <ellipse cx="12" cy="11.5" rx="3" ry="1.6" fill="#fff" fill-opacity="0.75" transform="rotate(-20 12 11.5)"/>
+  </symbol>
+
+  <symbol id="nailhead-pyramid" viewBox="0 0 32 32">
+    <polygon points="5,5 27,5 16,16" fill="#f7dc82"/>
+    <polygon points="27,5 27,27 16,16" fill="#a3791f"/>
+    <polygon points="27,27 5,27 16,16" fill="#5a4413"/>
+    <polygon points="5,27 5,5 16,16" fill="#d4af37"/>
+    <rect x="5" y="5" width="22" height="22" fill="none" stroke="#3d2e0d" stroke-width="0.6"/>
+    <path d="M5,5 16,16 M27,5 16,16 M27,27 16,16 M5,27 16,16" stroke="#3d2e0d" stroke-width="0.35"/>
+  </symbol>
+</svg>
 
 <div class="bg-blur" aria-hidden="true"></div>
 <div class="stone-field" id="stoneField" aria-hidden="true"></div>
 
 <div class="page-frame" aria-hidden="true">
-  <span class="frame-gems tl"><span class="gem gem-lg gem-ruby"></span><span class="gem gem-sapphire"></span><span class="gem gem-emerald"></span></span>
-  <span class="frame-gems tr"><span class="gem gem-emerald"></span><span class="gem gem-sapphire"></span><span class="gem gem-lg gem-ruby"></span></span>
-  <span class="frame-gems bl"><span class="gem gem-amber"></span><span class="gem gem-amethyst"></span><span class="gem gem-lg gem-aqua"></span></span>
-  <span class="frame-gems br"><span class="gem gem-lg gem-aqua"></span><span class="gem gem-amethyst"></span><span class="gem gem-amber"></span></span>
+  <span class="frame-gems tl">
+    <svg class="gem8 gem8-lg gem8-ruby"><use href="#gem8cut"/></svg>
+    <svg class="gem8 gem8-sapphire"><use href="#gem8cut"/></svg>
+    <svg class="gem8 gem8-emerald"><use href="#gem8cut"/></svg>
+  </span>
+  <span class="frame-gems tr">
+    <svg class="gem8 gem8-emerald"><use href="#gem8cut"/></svg>
+    <svg class="gem8 gem8-sapphire"><use href="#gem8cut"/></svg>
+    <svg class="gem8 gem8-lg gem8-ruby"><use href="#gem8cut"/></svg>
+  </span>
+  <span class="frame-gems bl">
+    <svg class="gem8 gem8-amber"><use href="#gem8cut"/></svg>
+    <svg class="gem8 gem8-amethyst"><use href="#gem8cut"/></svg>
+    <svg class="gem8 gem8-lg gem8-aqua"><use href="#gem8cut"/></svg>
+  </span>
+  <span class="frame-gems br">
+    <svg class="gem8 gem8-lg gem8-aqua"><use href="#gem8cut"/></svg>
+    <svg class="gem8 gem8-amethyst"><use href="#gem8cut"/></svg>
+    <svg class="gem8 gem8-amber"><use href="#gem8cut"/></svg>
+  </span>
 </div>
 
 <nav class="nav">
@@ -71,22 +146,18 @@
 </nav>
 
 <main id="top">
-  <div class="wrap">
 
     <section class="hero">
+      <div class="wrap">
       <div class="hero-inner">
-        <p class="eyebrow">Professional ETA clothing restoration</p>
         <h1>Because every performance deserves a <em>stage-ready suit.</em></h1>
-        <p class="lede">ETA Jumpsuit Restorations specializes in the restoration and repair of clothing for Elvis Tribute Artists. From jumpsuits and capes to belts, jackets, shirts, pants, and vests, every garment is restored with careful attention to its original craftsmanship and appearance.</p>
-        <div class="hero-ctas">
-          <a class="btn btn-solid" href="#pricing">See Pricing</a>
-          <a class="btn btn-outline" href="#gallery">View the Work</a>
-        </div>
+      </div>
       </div>
     </section>
 
 
     <section id="testimonials">
+      <div class="wrap">
       <div class="section-head">
         <h2>Trusted by the ETA Community</h2>
         <span class="section-num">Testimonials</span>
@@ -195,26 +266,30 @@
           <button type="button" class="testi-nav-btn testi-next" aria-label="Next testimonial">&#8250;</button>
         </div>
       </div>
+      </div>
     </section>
 
 
     <section id="about">
+      <div class="wrap">
       <div class="section-head">
         <h2>Restoring the Details</h2>
         <span class="section-num">About</span>
       </div>
       <div class="about-body">
-        <p>When I started out as an Elvis Tribute Artist, professionally made jumpsuits were very expensive, so I had to turn to used suits. I found two on eBay that fit my budget, but they were in awful condition. With the investment I had already made, I had to work with what I had and make them stage-worthy.</p>
+        <p>When I started out as an Elvis Tribute Artist, professionally made jumpsuits were out of budget, so I bought two used ones on eBay instead. Both arrived in awful condition — I had no choice but to learn to make them stage-worthy myself.</p>
         <p>For years, I restored only my own stagewear. As I shared photos of my work with fellow Elvis Tribute Artists, more and more performers began asking if I would restore their garments as well. That encouragement led to the creation of ETA Jumpsuit Restorations.</p>
-        <p>Since then, I've had the opportunity to work with garments from <strong>B&amp;K Enterprises</strong>, <strong>AJM</strong>, <strong>ProElvis</strong>, and numerous independent jumpsuit makers. Along the way, I've built relationships with jumpsuit makers, manufacturers, and material suppliers throughout the industry, allowing me to source authentic materials and replacement components for accurate restorations.</p>
+        <p>Since then, I've worked on garments from <strong>B&amp;K Enterprises</strong>, <strong>AJM</strong>, <strong>ProElvis</strong>, and numerous independent makers — and built relationships with manufacturers and material suppliers along the way, so I can source authentic parts for accurate repairs.</p>
         <p>Every restoration is approached with the same care, precision, and respect for the original craftsmanship of the garment.</p>
+      </div>
       </div>
     </section>
 
 
     <section id="services">
+      <div class="wrap">
       <div class="section-head">
-        <h2>Restoration Services</h2>
+        <h2>Services</h2>
         <span class="section-num">What We Restore</span>
       </div>
       <div class="svc-grid">
@@ -251,19 +326,21 @@
           <p>Custom projects, preservation, and specialty restoration work.</p>
         </div>
       </div>
+      </div>
     </section>
 
 
     <section id="pricing">
+      <div class="wrap">
       <div class="section-head">
         <h2>Price List</h2>
         <span class="section-num">Flat Rates</span>
       </div>
       <div class="ticket">
-        <span class="ticket-corner tl"><span class="gem gem-lg gem-ruby"></span></span>
-        <span class="ticket-corner tr"><span class="gem gem-lg gem-sapphire"></span></span>
-        <span class="ticket-corner bl"><span class="gem gem-lg gem-emerald"></span></span>
-        <span class="ticket-corner br"><span class="gem gem-lg gem-amber"></span></span>
+        <span class="ticket-corner tl"><svg class="gem8 gem8-lg gem8-ruby"><use href="#gem8cut"/></svg></span>
+        <span class="ticket-corner tr"><svg class="gem8 gem8-lg gem8-sapphire"><use href="#gem8cut"/></svg></span>
+        <span class="ticket-corner bl"><svg class="gem8 gem8-lg gem8-emerald"><use href="#gem8cut"/></svg></span>
+        <span class="ticket-corner br"><svg class="gem8 gem8-lg gem8-amber"><use href="#gem8cut"/></svg></span>
         <div class="ticket-head">
           <p class="tk-title">ETA Jumpsuit Restorations</p>
           <p class="tk-sub">— WORK ORDER · FLAT RATE PRICING —</p>
@@ -330,16 +407,16 @@
           <p class="tk-fine">Prices are subject to change. Please message <a href="https://www.facebook.com/ETAJumpsuitRestorations/" target="_blank" rel="noopener">ETA Jumpsuit Restorations on Facebook</a> before shipping your garment to discuss your project and confirm current pricing.</p>
         </div>
       </div>
+      </div>
     </section>
 
 
     <section id="gallery">
+      <div class="wrap">
       <div class="section-head">
         <h2>Recent Restorations</h2>
         <span class="section-num">Our Work</span>
       </div>
-      <p class="gal-intro">Explore a selection of before-and-after restorations completed for Elvis Tribute Artists. Each project reflects a commitment to preserving the original craftsmanship while preparing every garment for the stage.</p>
-      <p class="gal-intro">When available, each restoration includes the garment name and a summary of the work completed.</p>
       <div class="carousel" id="carousel">
         <div class="carousel-track">
           <figure class="carousel-slide is-active">
@@ -431,15 +508,15 @@
         </div>
       </div>
       <p class="gal-note">Before-and-after restorations, straight from the shop — swipe or use the arrows to see more.</p>
+      </div>
     </section>
 
-  </div>
 
-  <div class="stud-row" aria-hidden="true"></div>
+  <div class="nailhead-row" aria-hidden="true"><svg class="nh"><use href="#nailhead-star"/></svg><svg class="nh"><use href="#nailhead-oval"/></svg><svg class="nh"><use href="#nailhead-diamond"/></svg><svg class="nh"><use href="#nailhead-square"/></svg><svg class="nh"><use href="#nailhead-pyramid"/></svg><svg class="nh"><use href="#nailhead-star"/></svg><svg class="nh"><use href="#nailhead-oval"/></svg><svg class="nh"><use href="#nailhead-diamond"/></svg><svg class="nh"><use href="#nailhead-square"/></svg><svg class="nh"><use href="#nailhead-pyramid"/></svg><svg class="nh"><use href="#nailhead-star"/></svg><svg class="nh"><use href="#nailhead-oval"/></svg><svg class="nh"><use href="#nailhead-diamond"/></svg><svg class="nh"><use href="#nailhead-square"/></svg><svg class="nh"><use href="#nailhead-pyramid"/></svg><svg class="nh"><use href="#nailhead-star"/></svg><svg class="nh"><use href="#nailhead-oval"/></svg><svg class="nh"><use href="#nailhead-diamond"/></svg><svg class="nh"><use href="#nailhead-square"/></svg><svg class="nh"><use href="#nailhead-pyramid"/></svg></div>
 
   <div class="cta">
     <div class="wrap">
-      <h2>Send a jumpsuit. Get it back stage-ready.</h2>
+      <h2>Send it in — we'll take it from there.</h2>
       <a class="btn btn-solid" href="https://www.facebook.com/ETAJumpsuitRestorations/" target="_blank" rel="noopener">Message on Facebook</a>
     </div>
   </div>

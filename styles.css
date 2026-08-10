@@ -1,9 +1,9 @@
 @font-face {
-  font-family: 'Germania One';
+  font-family: 'Bevan';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('fonts/germania-one.woff2') format('woff2');
+  src: url('fonts/bevan.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Mulish';
@@ -33,8 +33,8 @@
   --c-aqua: #29c8c8;       --c-aqua-dark: #0d5c5c;
   --c-amethyst: #a94fe0;   --c-amethyst-dark: #4a1a66;
 
-  --font-display: 'Germania One', Georgia, serif;
-  --font-accent: 'Germania One', Georgia, serif;
+  --font-display: 'Bevan', Georgia, serif;
+  --font-accent: 'Bevan', Georgia, serif;
   --font-body: 'Mulish', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --font-ticket: 'Mulish', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
 }
@@ -43,67 +43,72 @@
 /* Reusable decoration primitives referenced throughout the sheet below. */
 
 .gilded {
-  background: linear-gradient(180deg, #fff8df 0%, var(--gold-bright) 32%, var(--gold) 62%, var(--gold-deep) 100%);
+  background: linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 15%, #fff8df 30%, var(--gold-bright) 42%, var(--gold) 60%, var(--gold-deep) 78%, var(--gold) 100%);
+  background-size: 220% 100%;
+  animation: goldShine 6s linear infinite;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   filter: drop-shadow(0 1px 0 rgba(255,255,255,0.3)) drop-shadow(0 2px 3px rgba(0,0,0,0.55));
 }
 
-.gem {
-  --gc: var(--gold-bright);
-  --gd: var(--gold-deep);
+.bling-sprites { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* 8-facet rhinestones — colored via `color`, the sprite's facets use
+   fill="currentColor". */
+.gem8 {
+  width: 16px;
+  height: 16px;
   display: inline-block;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
   flex-shrink: 0;
-  background:
-    radial-gradient(circle at 32% 26%, #fff 0%, rgba(255,255,255,0.95) 9%, transparent 30%),
-    radial-gradient(circle at 68% 72%, rgba(255,255,255,0.25) 0%, transparent 40%),
-    radial-gradient(circle at 48% 52%, var(--gc) 0%, var(--gd) 100%);
-  box-shadow: 0 0 6px 0 color-mix(in srgb, var(--gc) 65%, transparent), inset 0 0 1.5px rgba(255,255,255,0.7);
+  filter: drop-shadow(0 0 4px currentColor);
   animation: gemGlint 3.4s ease-in-out infinite;
 }
 
-.gem.gem-ruby      { --gc: var(--c-ruby);      --gd: var(--c-ruby-dark); }
-.gem.gem-sapphire   { --gc: var(--c-sapphire);  --gd: var(--c-sapphire-dark); }
-.gem.gem-emerald    { --gc: var(--c-emerald);   --gd: var(--c-emerald-dark); }
-.gem.gem-amber      { --gc: var(--c-amber);     --gd: var(--c-amber-dark); }
-.gem.gem-aqua        { --gc: var(--c-aqua);      --gd: var(--c-aqua-dark); }
-.gem.gem-amethyst   { --gc: var(--c-amethyst);  --gd: var(--c-amethyst-dark); }
-.gem.gem-gold       { --gc: var(--gold-bright); --gd: var(--gold-deep); }
+.gem8.gem8-lg { width: 26px; height: 26px; }
+.gem8.gem8-sm { width: 11px; height: 11px; }
 
-.gem.gem-lg { width: 15px; height: 15px; }
+.gem8-ruby      { color: var(--c-ruby); }
+.gem8-sapphire  { color: var(--c-sapphire); }
+.gem8-emerald   { color: var(--c-emerald); }
+.gem8-amber     { color: var(--c-amber); }
+.gem8-aqua      { color: var(--c-aqua); }
+.gem8-amethyst  { color: var(--c-amethyst); }
+.gem8-gold      { color: var(--gold); }
+
+/* Nailheads — flat gold metal trim (star/oval/diamond/square/pyramid). */
+.nh {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 1.5px rgba(0,0,0,0.55));
+}
 
 @keyframes gemGlint {
   0%, 100% { filter: brightness(1); }
   50% { filter: brightness(1.35); }
 }
 
-.stud {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  background: radial-gradient(circle at 34% 28%, #fff8d8 0%, var(--gold-bright) 30%, var(--gold) 62%, var(--gold-deep) 100%);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.6), inset 0 0 1px rgba(255,255,255,0.8);
+@keyframes goldShine {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -50% 0; }
 }
 
-.stud-row {
-  height: 9px;
-  margin: 0 0 clamp(2rem, 4vw, 3rem);
-  background-image: radial-gradient(circle at center, var(--gold-bright) 0 2px, var(--gold) 2px 3px, transparent 3px 100%);
-  background-size: 24px 9px;
-  background-repeat: repeat-x;
-  background-position: center;
-  opacity: 0.85;
+.nailhead-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1440px;
+  margin: 0 auto clamp(2rem, 4vw, 3rem);
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
+  opacity: 0.9;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .gem { animation: none; }
+@media (max-width: 720px) {
+  .nailhead-row .nh:nth-child(3n+2) { display: none; }
 }
+
 
 * { box-sizing: border-box; }
 html {
@@ -196,8 +201,8 @@ img, svg { max-width: 100%; display: block; }
 
 @media (max-width: 640px) {
   .page-frame { border-width: 3px; }
-  .frame-gems .gem.gem-lg { width: 10px; height: 10px; }
-  .frame-gems .gem:not(.gem-lg) { width: 6px; height: 6px; }
+  .frame-gems .gem8.gem8-lg { width: 16px; height: 16px; }
+  .frame-gems .gem8:not(.gem8-lg) { width: 10px; height: 10px; }
 }
 
 .stone {
@@ -296,7 +301,9 @@ footer.site-footer { position: relative; z-index: 1; }
 
 .brand-word em {
   font-style: normal;
-  background: linear-gradient(180deg, #fff8df 0%, var(--gold-bright) 35%, var(--gold) 70%, var(--gold-deep) 100%);
+  background: linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 15%, #fff8df 30%, var(--gold-bright) 42%, var(--gold) 60%, var(--gold-deep) 78%, var(--gold) 100%);
+  background-size: 220% 100%;
+  animation: goldShine 6s linear infinite;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -393,37 +400,6 @@ footer.site-footer { position: relative; z-index: 1; }
   max-width: 720px;
 }
 
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--gold);
-  font-weight: 600;
-  margin-bottom: 1.4rem;
-}
-
-.eyebrow::before {
-  content: "";
-  width: 26px;
-  height: 1px;
-  background: var(--gold);
-}
-
-.eyebrow::after {
-  content: "";
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 32% 26%, #fff 0%, rgba(255,255,255,0.95) 10%, transparent 30%),
-    radial-gradient(circle at 48% 52%, var(--gold-bright) 0%, var(--gold-deep) 100%);
-  box-shadow: 0 0 6px rgba(212,175,55,0.75);
-}
-
 .hero h1 {
   font-family: var(--font-display);
   font-weight: 400;
@@ -437,7 +413,9 @@ footer.site-footer { position: relative; z-index: 1; }
 
 .hero h1 em {
   font-style: normal;
-  background: linear-gradient(180deg, #fff8df 0%, var(--gold-bright) 32%, var(--gold) 62%, var(--gold-deep) 100%);
+  background: linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 15%, #fff8df 30%, var(--gold-bright) 42%, var(--gold) 60%, var(--gold-deep) 78%, var(--gold) 100%);
+  background-size: 220% 100%;
+  animation: goldShine 6s linear infinite;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -446,19 +424,6 @@ footer.site-footer { position: relative; z-index: 1; }
   text-decoration-color: var(--gold);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.12em;
-}
-
-.hero p.lede {
-  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
-  color: var(--ivory-dim);
-  max-width: 46ch;
-  margin: 0 0 2.2rem;
-}
-
-.hero-ctas {
-  display: flex;
-  gap: 0.9rem;
-  flex-wrap: wrap;
 }
 
 .btn {
@@ -482,7 +447,9 @@ footer.site-footer { position: relative; z-index: 1; }
 .btn:hover { transform: translateY(-1px); }
 
 .btn-solid {
-  background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 55%, var(--gold-deep) 100%);
+  background: linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 20%, var(--gold-bright) 35%, #fff8df 48%, var(--gold-bright) 60%, var(--gold) 80%, var(--gold-deep) 100%);
+  background-size: 220% 100%;
+  animation: goldShine 5s linear infinite;
   color: #241a05;
   box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset, 0 6px 16px -8px rgba(212,175,55,0.7);
 }
@@ -509,14 +476,31 @@ footer.site-footer { position: relative; z-index: 1; }
   .btn-solid::after { animation: none; display: none; }
 }
 
-.btn-outline {
-  border-color: var(--line);
-  color: var(--ivory);
-  background: transparent;
-}
-.btn-outline:hover { border-color: var(--gold); color: var(--gold-bright); }
-
 section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
+
+/* Each chapter of the page is a full viewport-height, distinctly
+   colored slide — content vertically centers within it, and the
+   section simply grows taller than 100vh if it has more content
+   than one screen can hold (never clips). */
+.hero,
+#testimonials,
+#about,
+#services,
+#pricing,
+#gallery {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: clamp(3rem, 6vw, 4.5rem);
+}
+
+.hero        { background: radial-gradient(ellipse 1100px 650px at 50% -5%, rgba(212,175,55,0.14), transparent 65%), #0b0904; }
+#testimonials { background: radial-gradient(ellipse 900px 550px at 15% 0%, rgba(224,38,63,0.1), transparent 60%), #150a0c; }
+#about        { background: radial-gradient(ellipse 900px 550px at 85% 0%, rgba(47,127,224,0.1), transparent 60%), #070f1c; }
+#services     { background: radial-gradient(ellipse 900px 550px at 15% 100%, rgba(38,182,115,0.1), transparent 60%), #06140f; }
+#pricing      { background: radial-gradient(ellipse 900px 550px at 85% 100%, rgba(226,150,42,0.12), transparent 60%), #170f04; }
+#gallery      { background: radial-gradient(ellipse 900px 550px at 50% 100%, rgba(169,79,224,0.1), transparent 60%), #130818; }
 
 .section-head {
   display: flex;
@@ -533,7 +517,9 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
   font-size: clamp(1.5rem, 2.8vw, 2.05rem);
   letter-spacing: 0.005em;
   margin: 0;
-  background: linear-gradient(180deg, #fff8df 0%, var(--gold-bright) 32%, var(--gold) 62%, var(--gold-deep) 100%);
+  background: linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 15%, #fff8df 30%, var(--gold-bright) 42%, var(--gold) 60%, var(--gold-deep) 78%, var(--gold) 100%);
+  background-size: 220% 100%;
+  animation: goldShine 6s linear infinite;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -598,7 +584,9 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
 .stat-num {
   font-family: var(--font-display);
   font-size: clamp(2rem, 5vw, 2.7rem);
-  background: linear-gradient(180deg, #fff8df 0%, var(--gold-bright) 32%, var(--gold) 62%, var(--gold-deep) 100%);
+  background: linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 15%, #fff8df 30%, var(--gold-bright) 42%, var(--gold) 60%, var(--gold-deep) 78%, var(--gold) 100%);
+  background-size: 220% 100%;
+  animation: goldShine 6s linear infinite;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -779,7 +767,9 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
   font-size: 1.05rem;
   letter-spacing: 0.01em;
   margin: 0 0 0.55rem;
-  background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 70%, var(--gold-deep) 100%);
+  background: linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 20%, var(--gold-bright) 40%, #fff8df 55%, var(--gold-bright) 68%, var(--gold) 85%, var(--gold-deep) 100%);
+  background-size: 220% 100%;
+  animation: goldShine 7s linear infinite;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -835,7 +825,9 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
   font-size: 0.95rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  background: linear-gradient(180deg, #fff8df 0%, var(--gold-bright) 32%, var(--gold) 62%, var(--gold-deep) 100%);
+  background: linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 15%, #fff8df 30%, var(--gold-bright) 42%, var(--gold) 60%, var(--gold-deep) 78%, var(--gold) 100%);
+  background-size: 220% 100%;
+  animation: goldShine 6s linear infinite;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -875,7 +867,9 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
   font-family: var(--font-ticket);
   font-weight: 800;
   font-size: 0.98rem;
-  background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 65%, var(--gold-deep) 100%);
+  background: linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 20%, var(--gold-bright) 40%, #fff8df 55%, var(--gold-bright) 68%, var(--gold) 85%, var(--gold-deep) 100%);
+  background-size: 220% 100%;
+  animation: goldShine 7s linear infinite;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -910,12 +904,6 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
 }
 
 /* ---------- Gallery carousel ---------- */
-
-.gal-intro {
-  color: var(--ivory-dim);
-  max-width: 68ch;
-  margin: 0 0 1.6rem;
-}
 
 .carousel {
   position: relative;
@@ -1052,6 +1040,7 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
 .cta {
   text-align: center;
   padding: clamp(3rem, 7vw, 4.5rem) 0;
+  background: radial-gradient(ellipse 1100px 650px at 50% 100%, rgba(212,175,55,0.14), transparent 65%), #0b0904;
 }
 
 .cta h2 {
@@ -1060,7 +1049,9 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
   font-style: normal;
   font-size: clamp(1.4rem, 3vw, 1.9rem);
   letter-spacing: 0.005em;
-  background: linear-gradient(180deg, #fff8df 0%, var(--gold-bright) 32%, var(--gold) 62%, var(--gold-deep) 100%);
+  background: linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 15%, #fff8df 30%, var(--gold-bright) 42%, var(--gold) 60%, var(--gold-deep) 78%, var(--gold) 100%);
+  background-size: 220% 100%;
+  animation: goldShine 6s linear infinite;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
