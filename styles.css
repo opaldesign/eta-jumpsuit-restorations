@@ -395,15 +395,47 @@ footer.site-footer { position: relative; z-index: 1; }
   position: relative;
 }
 
+/* A cut-rhinestone diagram, rendered in ASCII, drifting through a few
+   perspectives (top view, rotated, tilted 3/4, side profile) behind
+   the headline — generated from real facet geometry, not hand-typed. */
+.hero-gem-field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-gem {
+  grid-area: 1 / 1;
+  margin: 0;
+  font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+  font-size: clamp(0.42rem, 1.15vw, 0.95rem);
+  line-height: 1.05;
+  white-space: pre;
+  text-align: center;
+  color: var(--gold);
+  opacity: 0;
+  filter: drop-shadow(0 0 16px rgba(212,175,55,0.3));
+  transition: opacity 2.2s ease, filter 2.2s ease;
+}
+
+.hero-gem.is-active { opacity: 0.16; }
+
 .hero-inner {
+  position: relative;
+  z-index: 1;
   width: 100%;
   text-align: center;
+  overflow: hidden;
 }
 
 .hero h1 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(0.85rem, 3.6vw, 3.9rem);
+  font-size: clamp(0.5rem, 2.4vw, 2.75rem);
   line-height: 1.12;
   letter-spacing: 0.005em;
   margin: 0;
