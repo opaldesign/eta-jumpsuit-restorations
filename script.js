@@ -125,7 +125,7 @@
     var carousel = document.getElementById('testiCarousel');
     if (!carousel) return;
 
-    var slides = Array.from(carousel.querySelectorAll('.testi-slide'));
+    var slides = Array.from(carousel.querySelectorAll('.testi-item'));
     var dotsWrap = document.getElementById('testiDots');
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var idx = 0;
