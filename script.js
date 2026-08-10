@@ -1,3 +1,33 @@
+  // Hero headline: must stay on one line (no wrap) at any width. CSS
+  // clamp() math to guarantee that turned out unreliable in practice
+  // (font metrics/kerning don't match a plain glyph-width estimate) —
+  // so instead, measure the ACTUAL rendered width and shrink the font
+  // until it truly fits. Re-checks on resize and once fonts finish
+  // loading (a fallback-font flash has different metrics than Bevan).
+  (function () {
+    var h1 = document.querySelector('.hero h1');
+    var wrap = h1 && h1.closest('.wrap');
+    if (!h1 || !wrap) return;
+
+    function fit() {
+      // Clear any previous shrink so CSS clamp() recomputes its natural
+      // size for the current viewport, then measure against that.
+      h1.style.fontSize = '';
+      var baseSize = parseFloat(getComputedStyle(h1).fontSize);
+      var available = wrap.clientWidth;
+      var needed = h1.scrollWidth;
+      if (needed > available) {
+        h1.style.fontSize = (baseSize * (available / needed) * 0.97) + 'px';
+      }
+    }
+
+    fit();
+    window.addEventListener('resize', fit);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(fit);
+    }
+  })();
+
   // Mobile nav: toggle the dropdown menu, close it on link click or outside click.
   (function () {
     var toggle = document.getElementById('navToggle');

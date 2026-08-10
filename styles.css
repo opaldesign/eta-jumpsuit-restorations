@@ -52,63 +52,10 @@
   filter: drop-shadow(0 1px 0 rgba(255,255,255,0.3)) drop-shadow(0 2px 3px rgba(0,0,0,0.55));
 }
 
-.bling-sprites { position: absolute; width: 0; height: 0; overflow: hidden; }
-
-/* 8-facet rhinestones — colored via `color`, the sprite's facets use
-   fill="currentColor". */
-.gem8 {
-  width: 16px;
-  height: 16px;
-  display: inline-block;
-  flex-shrink: 0;
-  filter: drop-shadow(0 0 4px currentColor);
-  animation: gemGlint 3.4s ease-in-out infinite;
-}
-
-.gem8.gem8-lg { width: 26px; height: 26px; }
-.gem8.gem8-sm { width: 11px; height: 11px; }
-
-.gem8-ruby      { color: var(--c-ruby); }
-.gem8-sapphire  { color: var(--c-sapphire); }
-.gem8-emerald   { color: var(--c-emerald); }
-.gem8-amber     { color: var(--c-amber); }
-.gem8-aqua      { color: var(--c-aqua); }
-.gem8-amethyst  { color: var(--c-amethyst); }
-.gem8-gold      { color: var(--gold); }
-
-/* Nailheads — flat gold metal trim (star/oval/diamond/square/pyramid). */
-.nh {
-  width: 15px;
-  height: 15px;
-  display: inline-block;
-  flex-shrink: 0;
-  filter: drop-shadow(0 1px 1.5px rgba(0,0,0,0.55));
-}
-
-@keyframes gemGlint {
-  0%, 100% { filter: brightness(1); }
-  50% { filter: brightness(1.35); }
-}
-
 @keyframes goldShine {
   from { background-position: 0% 0; }
   to   { background-position: -280% 0; }
 }
-
-.nailhead-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1440px;
-  margin: 0 auto clamp(2rem, 4vw, 3rem);
-  padding: 0 clamp(1.25rem, 4vw, 3rem);
-  opacity: 0.9;
-}
-
-@media (max-width: 720px) {
-  .nailhead-row .nh:nth-child(3n+2) { display: none; }
-}
-
 
 * { box-sizing: border-box; }
 html {
@@ -175,8 +122,7 @@ img, svg { max-width: 100%; display: block; }
   overflow: hidden;
 }
 
-/* Bedazzled picture-frame border around the whole page, gem clusters at
-   the corners — echoes the ornate gold poster/jumpsuit trim. */
+/* Gold picture-frame border around the whole page. */
 .page-frame {
   position: fixed;
   inset: 0;
@@ -187,22 +133,8 @@ img, svg { max-width: 100%; display: block; }
   box-shadow: inset 0 0 0 1px rgba(0,0,0,0.5), inset 0 0 50px rgba(212,175,55,0.12);
 }
 
-.frame-gems {
-  position: absolute;
-  display: flex;
-  gap: 6px;
-  padding: 9px;
-}
-
-.frame-gems.tl { top: 0; left: 0; }
-.frame-gems.tr { top: 0; right: 0; }
-.frame-gems.bl { bottom: 0; left: 0; }
-.frame-gems.br { bottom: 0; right: 0; }
-
 @media (max-width: 640px) {
   .page-frame { border-width: 3px; }
-  .frame-gems .gem8.gem8-lg { width: 16px; height: 16px; }
-  .frame-gems .gem8:not(.gem8-lg) { width: 10px; height: 10px; }
 }
 
 .stone {
@@ -813,17 +745,6 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
   overflow: hidden;
   box-shadow: 0 0 0 1px rgba(212,175,55,0.3), 0 24px 50px -28px rgba(212,175,55,0.5);
 }
-
-.ticket-corner {
-  position: absolute;
-  z-index: 2;
-  padding: 10px;
-}
-
-.ticket-corner.tl { top: 0; left: 0; }
-.ticket-corner.tr { top: 0; right: 0; }
-.ticket-corner.bl { bottom: 0; left: 0; }
-.ticket-corner.br { bottom: 0; right: 0; }
 
 .ticket::before {
   content: "";
