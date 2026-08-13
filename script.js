@@ -1,11 +1,11 @@
-  // Hero background video: no autoplay attribute in the HTML on purpose —
-  // only starts playback here, and only when motion is actually wanted,
-  // so reduced-motion visitors just see the static poster frame.
+  // Hero background video: the HTML autoplay attribute handles the
+  // common case (native, reliable, no JS dependency). JS only steps in
+  // for reduced-motion visitors, pausing it back to a static frame.
   (function () {
     var v = document.querySelector('.hero-video');
     if (!v) return;
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      v.play().catch(function () {});
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      v.pause();
     }
   })();
 
