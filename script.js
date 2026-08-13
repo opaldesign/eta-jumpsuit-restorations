@@ -6,18 +6,22 @@
   // loading (a fallback-font flash has different metrics than Bevan).
   (function () {
     var h1 = document.querySelector('.hero h1');
-    var wrap = h1 && h1.closest('.wrap');
-    if (!h1 || !wrap) return;
+    // .hero-inner is h1's direct parent and has no padding of its own, so
+    // its clientWidth IS the actual available width for the headline.
+    // (.wrap's clientWidth was wrong here — it includes wrap's own
+    // left/right padding, which isn't space the text can use.)
+    var container = h1 && h1.closest('.hero-inner');
+    if (!h1 || !container) return;
 
     function fit() {
       // Clear any previous shrink so CSS clamp() recomputes its natural
       // size for the current viewport, then measure against that.
       h1.style.fontSize = '';
       var baseSize = parseFloat(getComputedStyle(h1).fontSize);
-      var available = wrap.clientWidth;
+      var available = container.clientWidth;
       var needed = h1.scrollWidth;
       if (needed > available) {
-        h1.style.fontSize = (baseSize * (available / needed) * 0.97) + 'px';
+        h1.style.fontSize = (baseSize * (available / needed) * 0.94) + 'px';
       }
     }
 
