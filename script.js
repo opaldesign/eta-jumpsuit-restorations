@@ -1,3 +1,14 @@
+  // Hero background video: no autoplay attribute in the HTML on purpose —
+  // only starts playback here, and only when motion is actually wanted,
+  // so reduced-motion visitors just see the static poster frame.
+  (function () {
+    var v = document.querySelector('.hero-video');
+    if (!v) return;
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      v.play().catch(function () {});
+    }
+  })();
+
   // Hero headline: must stay on one line (no wrap) at any width. CSS
   // clamp() math to guarantee that turned out unreliable in practice
   // (font metrics/kerning don't match a plain glyph-width estimate) —
