@@ -536,46 +536,35 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
 
 .testi-single { position: relative; }
 
-/* All testimonials stack in the same grid cell so the viewport's
-   height is always driven by the tallest one — swapping between a
-   one-line and a five-line quote never reflows the page around it. */
+/* Only the active testimonial is ever in the layout — the viewport
+   just sizes to whatever's showing and centers it, so a one-line
+   quote and a five-line quote both sit close under the heading
+   instead of a short one floating in a tall reserved box. */
 .testi-viewport {
-  display: grid;
-  align-items: stretch;
-  justify-items: center;
+  display: flex;
+  justify-content: center;
 }
 
-/* Every testimonial fills the same shared height (set by the tallest
-   quote, via the shared grid cell below) and is a flex column with the
-   name pinned to the bottom via margin-top:auto — so the name always
-   lands on the same line, whether the quote is one word or five
-   sentences. */
 .testi-item {
-  grid-area: 1 / 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
+  display: none;
   width: 100%;
   max-width: 62ch;
   margin: 0 auto;
-  padding: 0.5rem 0;
   text-align: center;
   border: none;
   background: none;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(6px);
-  transition: opacity 0.6s ease, transform 0.6s ease, visibility 0s linear 0.6s;
-  pointer-events: none;
 }
 
 .testi-item.is-active {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: testiIn 0.6s ease;
+}
+
+@keyframes testiIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .testi-item p {
@@ -587,8 +576,7 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
 
 .testi-item cite {
   display: block;
-  margin-top: auto;
-  padding-top: 1.1rem;
+  padding-top: 0.3rem;
   font-style: normal;
   font-size: 0.78rem;
   letter-spacing: 0.1em;
@@ -615,52 +603,9 @@ section { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
   margin-bottom: 1rem;
 }
 
-.testi-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.1rem;
-  margin-top: 1.75rem;
+@media (prefers-reduced-motion: reduce) {
+  .testi-item.is-active { animation: none; }
 }
-
-.testi-nav-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  background: transparent;
-  color: var(--ivory);
-  font-size: 1.2rem;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: border-color 0.15s ease, color 0.15s ease;
-}
-
-.testi-nav-btn:hover, .testi-nav-btn:focus-visible {
-  border-color: var(--gold);
-  color: var(--gold-bright);
-}
-
-.testi-dots {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.testi-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
-}
-
-.testi-dot.is-active { background: var(--ivory); border-color: var(--ivory); }
 
 /* ---------- About ---------- */
 

@@ -154,36 +154,22 @@
     startAutoplay();
   })();
 
-  // Testimonials carousel: rotates three cards at a time, autoplay + prev/next + dots.
+  // Testimonials: auto-rotates one quote at a time, no visible controls.
+  // Pauses while the reader's mouse/focus is over it so it doesn't yank
+  // a quote away mid-read.
   (function () {
     var carousel = document.getElementById('testiCarousel');
     if (!carousel) return;
 
     var slides = Array.from(carousel.querySelectorAll('.testi-item'));
-    var dotsWrap = document.getElementById('testiDots');
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var idx = 0;
     var timer = null;
 
-    slides.forEach(function (_, i) {
-      var dot = document.createElement('button');
-      dot.type = 'button';
-      dot.className = 'testi-dot' + (i === 0 ? ' is-active' : '');
-      dot.setAttribute('aria-label', 'Show testimonials, page ' + (i + 1));
-      dot.addEventListener('click', function () {
-        show(i);
-        restartAutoplay();
-      });
-      dotsWrap.appendChild(dot);
-    });
-    var dots = Array.from(dotsWrap.children);
-
     function show(i) {
       slides[idx].classList.remove('is-active');
-      if (dots[idx]) dots[idx].classList.remove('is-active');
       idx = (i + slides.length) % slides.length;
       slides[idx].classList.add('is-active');
-      if (dots[idx]) dots[idx].classList.add('is-active');
     }
 
     function startAutoplay() {
@@ -194,20 +180,6 @@
     function stopAutoplay() {
       clearInterval(timer);
     }
-
-    function restartAutoplay() {
-      stopAutoplay();
-      startAutoplay();
-    }
-
-    carousel.querySelector('.testi-prev').addEventListener('click', function () {
-      show(idx - 1);
-      restartAutoplay();
-    });
-    carousel.querySelector('.testi-next').addEventListener('click', function () {
-      show(idx + 1);
-      restartAutoplay();
-    });
 
     carousel.addEventListener('mouseenter', stopAutoplay);
     carousel.addEventListener('mouseleave', startAutoplay);
