@@ -17,16 +17,10 @@
   // loading (a fallback-font flash has different metrics than Bevan).
   (function () {
     var h1 = document.querySelector('.hero h1');
-    // .hero-inner is h1's direct parent and has no padding of its own, so
-    // its clientWidth IS the actual available width for the headline.
-    // (.wrap's clientWidth was wrong here — it includes wrap's own
-    // left/right padding, which isn't space the text can use.)
     var container = h1 && h1.closest('.hero-inner');
     if (!h1 || !container) return;
 
     function fit() {
-      // Clear any previous shrink so CSS clamp() recomputes its natural
-      // size for the current viewport, then measure against that.
       h1.style.fontSize = '';
       var baseSize = parseFloat(getComputedStyle(h1).fontSize);
       var available = container.clientWidth;
@@ -43,58 +37,88 @@
     }
   })();
 
-  // Mobile nav: toggle the dropdown menu, close it on link click or outside click.
+  // Page navigation: the always-visible "set list" panel on the left is
+  // the site's entire nav — no header/footer bar, no click-to-reveal.
+  // Pages live in one fixed order (ORDER, below — matches the menu, top
+  // to bottom), so direction is never arbitrary: a page LATER in the
+  // list always slides in from the right (and the page you're leaving
+  // slides out left); a page EARLIER always slides in from the left —
+  // ordinary next/previous, so it's predictable before you click.
+  // This also replaces the old #hash scrollIntoView handler — following
+  // a #hash href directly used to trigger a real browser navigation
+  // (and a "Forbidden" response) instead of an in-page jump, so every
+  // link here is intercepted and prevented.
   (function () {
-    var toggle = document.getElementById('navToggle');
-    var menu = document.getElementById('navMobile');
-    if (!toggle || !menu) return;
+    var setlist = document.getElementById('setlist');
+    if (!setlist) return;
 
-    function closeMenu() {
-      menu.classList.remove('is-open');
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Open menu');
-    }
+    var ORDER = ['home', 'about', 'services', 'pricing', 'testimonials', 'gallery', 'contact'];
+    var screens = {};
+    ORDER.forEach(function (id) { screens[id] = document.getElementById(id); });
 
-    function openMenu() {
-      menu.classList.add('is-open');
-      toggle.setAttribute('aria-expanded', 'true');
-      toggle.setAttribute('aria-label', 'Close menu');
-    }
-
-    toggle.addEventListener('click', function () {
-      if (menu.classList.contains('is-open')) closeMenu();
-      else openMenu();
-    });
-
-    menu.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', closeMenu);
-    });
-
-    document.addEventListener('click', function (e) {
-      if (!menu.classList.contains('is-open')) return;
-      if (menu.contains(e.target) || toggle.contains(e.target)) return;
-      closeMenu();
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeMenu();
-    });
-  })();
-
-  // In-page nav: scroll to sections via JS instead of letting the browser
-  // follow the #hash href directly, since that was triggering a real page
-  // navigation (and a "Forbidden" response) instead of an in-page jump.
-  (function () {
+    var current = 'home';
+    var links = Array.from(setlist.querySelectorAll('a[href^="#"]'));
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+
+    function setActive(id) {
+      links.forEach(function (a) {
+        var isActive = a.getAttribute('href') === '#' + id;
+        a.classList.toggle('is-active', isActive);
+        a.setAttribute('aria-current', isActive ? 'page' : 'false');
+      });
+    }
+
+    function panTo(id) {
+      if (!screens[id] || id === current) return;
+      var dir = ORDER.indexOf(id) > ORDER.indexOf(current) ? 1 : -1;
+      var fromEl = screens[current];
+      var toEl = screens[id];
+
+      if (reduceMotion) {
+        fromEl.classList.remove('is-current');
+        toEl.classList.add('is-current');
+      } else {
+        // Place the incoming page off-screen on the correct side, then
+        // reveal it and animate both pages past each other next frame.
+        toEl.style.transition = 'none';
+        toEl.style.transform = 'translateX(' + (dir * 100) + '%) scale(0.97)';
+        toEl.classList.add('is-current', 'is-entering');
+        void toEl.offsetWidth; // force reflow before re-enabling the transition
+        toEl.style.transition = '';
+
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            fromEl.style.transform = 'translateX(' + (-dir * 100) + '%) scale(0.97)';
+            toEl.style.transform = 'translateX(0) scale(1)';
+          });
+        });
+
+        var onDone = function (e) {
+          if (e.target !== fromEl || e.propertyName !== 'transform') return;
+          fromEl.classList.remove('is-current');
+          fromEl.style.transform = '';
+          fromEl.removeEventListener('transitionend', onDone);
+        };
+        fromEl.addEventListener('transitionend', onDone);
+
+        setTimeout(function () { toEl.classList.remove('is-entering'); }, 700);
+      }
+
+      current = id;
+      setActive(id);
+      document.dispatchEvent(new CustomEvent('screen:change', { detail: { dir: dir } }));
+    }
+
+    links.forEach(function (link) {
       link.addEventListener('click', function (e) {
         var id = link.getAttribute('href').slice(1);
-        var target = document.getElementById(id);
-        if (!target) return;
+        if (!screens[id]) return;
         e.preventDefault();
-        target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        panTo(id);
       });
     });
+
+    setActive(current);
   })();
 
   // Gallery carousel: crossfade between slides, autoplay, prev/next + dots.
@@ -201,7 +225,9 @@
   })();
 
   // Stat counters: numbers count up from 0 to their real value the first
-  // time the stats bar scrolls into view.
+  // time the stats screen is panned into view. IntersectionObserver still
+  // works here even though the page never scrolls — .stage is genuinely
+  // translated, so screens really do enter and leave the viewport rect.
   (function () {
     var nums = Array.from(document.querySelectorAll('.stat-num'));
     if (!nums.length) return;
@@ -247,10 +273,12 @@
     });
   })();
 
-  // Scattered rhinestones: idle twinkle always on. Scrolling drives a
-  // multi-depth parallax (each stone drifts at its own rate) plus a
-  // reflection band that flares any stone crossing the viewport's
-  // vertical middle, like light catching rhinestones as the page moves.
+  // Scattered rhinestones: idle twinkle always on. There's no scroll to
+  // drive a parallax/reflection band anymore, so instead every page
+  // navigation fires a burst of bright flares across random stones plus a
+  // quick directional nudge of the whole field — light catching the
+  // rhinestones as the page itself moves, same idea as before, just
+  // triggered by panning between screens instead of scrolling.
   (function () {
     var field = document.getElementById('stoneField');
     if (!field) return;
@@ -267,11 +295,6 @@
       '#e0263f', '#2f7fe0', '#26b673', '#e2962a', '#29c8c8', '#a94fe0'
     ];
 
-    // Each stone gets its own parallax depth (how much it drifts per
-    // pixel scrolled) so the field reads as several layers at different
-    // distances, Apple-product-page style, instead of one flat sheet.
-    var depths = [];
-
     for (var i = 0; i < STONE_COUNT; i++) {
       var stone = document.createElement('span');
       stone.className = 'stone';
@@ -283,48 +306,92 @@
       stone.style.setProperty('--c', COLORS[Math.floor(Math.random() * COLORS.length)]);
       field.appendChild(stone);
       stones.push(stone);
-      depths.push(0.35 + Math.random() * 1.15);
     }
 
     if (reduceMotion) return;
 
-    var ticking = false;
-
-    function updateParallax() {
-      var y = window.scrollY || window.pageYOffset;
-      var vh = window.innerHeight;
-      var band = vh * 0.5;
-
-      // Pass 1: move every stone at its own depth (read nothing, just write —
-      // transform is compositor-only so this doesn't force layout).
-      for (var i = 0; i < stones.length; i++) {
-        var offset = (y * -0.09 * depths[i]).toFixed(1);
-        stones[i].style.transform = 'translate3d(0, ' + offset + 'px, 0)';
+    function flareBurst() {
+      var batch = 6 + Math.floor(Math.random() * 6);
+      for (var i = 0; i < batch; i++) {
+        var stone = stones[Math.floor(Math.random() * stones.length)];
+        stone.classList.add('flare');
+        (function (s) {
+          setTimeout(function () { s.classList.remove('flare'); }, 450);
+        })(stone);
       }
-
-      // Pass 2: a light band sweeps across the vertical middle of the
-      // viewport as you scroll — any stone currently crossing it catches
-      // a bright reflection flare, like light glancing off rhinestones as
-      // the "jumpsuit" (page) moves past.
-      for (var j = 0; j < stones.length; j++) {
-        var rect = stones[j].getBoundingClientRect();
-        var dist = Math.abs(rect.top - band);
-        if (dist < 70) {
-          stones[j].classList.add('flare');
-        } else {
-          stones[j].classList.remove('flare');
-        }
-      }
-
-      ticking = false;
     }
 
-    window.addEventListener('scroll', function () {
-      if (!ticking) {
-        requestAnimationFrame(updateParallax);
-        ticking = true;
-      }
-    }, { passive: true });
+    function nudgeField(dir) {
+      field.style.transition = 'none';
+      field.style.transform = 'translate3d(' + (dir * 2.5) + 'vw, 0, 0)';
+      void field.offsetWidth;
+      field.style.transition = 'transform 0.6s cubic-bezier(.22,.61,.36,1)';
+      field.style.transform = 'translate3d(0, 0, 0)';
+    }
 
-    updateParallax();
+    document.addEventListener('screen:change', function (e) {
+      nudgeField(e.detail && e.detail.dir ? e.detail.dir : 1);
+      flareBurst();
+    });
+  })();
+
+  // Contact form: this is a static site with no backend, so "sending"
+  // the message means building a mailto: link from the fields and
+  // handing it to the visitor's own email app to send — no server, no
+  // account to set up. Two lightweight anti-spam checks run first: a
+  // honeypot field bots tend to auto-fill (real visitors never see it),
+  // and a plain-language question about where the shop is based, which
+  // doubles as reinforcing that on the page itself.
+  (function () {
+    var form = document.getElementById('contactForm');
+    if (!form) return;
+
+    var TO_EMAIL = 'etajumpsuitrestorations@gmail.com';
+    var LOCATION_ANSWER = 'chicago';
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var honeypot = form.elements.website;
+      if (honeypot && honeypot.value.trim() !== '') return; // silently drop likely bot traffic
+
+      var cityInput = form.elements.citycheck;
+      var cityHint = document.getElementById('cfCityHint');
+      var cityOk = cityInput && cityInput.value.trim().toLowerCase().indexOf(LOCATION_ANSWER) !== -1;
+      if (!cityOk) {
+        if (cityHint) cityHint.hidden = false;
+        if (cityInput) cityInput.focus();
+        return;
+      }
+      if (cityHint) cityHint.hidden = true;
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      var first = form.elements.firstName.value.trim();
+      var last = form.elements.lastName.value.trim();
+      var email = form.elements.email.value.trim();
+      var service = form.elements.service.value;
+      var maker = form.elements.maker.value.trim();
+      var notes = form.elements.notes.value.trim();
+      var needs = Array.from(form.querySelectorAll('input[name="needs"]:checked')).map(function (c) {
+        return c.value;
+      });
+
+      var subject = 'Restoration request — ' + first + ' ' + last;
+      var body = [
+        'Name: ' + first + ' ' + last,
+        'Email: ' + email,
+        'Service needed: ' + service,
+        'Jumpsuit maker: ' + (maker || '—'),
+        'Specific needs: ' + (needs.length ? needs.join(', ') : '—'),
+        'Anything else: ' + (notes || '—')
+      ].join('\n');
+
+      window.location.href = 'mailto:' + TO_EMAIL +
+        '?subject=' + encodeURIComponent(subject) +
+        '&body=' + encodeURIComponent(body);
+    });
   })();
